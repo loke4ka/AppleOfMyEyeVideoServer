@@ -37,7 +37,12 @@ class App extends Component {
       .emit('init');
   }
 
-  startCall(isCaller, friendID, config) {
+  startCall(isCaller, friendID, config , userType) {
+    
+      if (userType !== 'volunteer') {
+        window.postMessage(JSON.stringify({ id: 'volunteerID' }));
+      }
+
     this.config = config;
     this.pc = new PeerConnection(friendID)
       .on('localStream', (src) => {
