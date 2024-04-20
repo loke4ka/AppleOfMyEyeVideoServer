@@ -23,6 +23,9 @@ function MainWindow({ startCall , userType }) {
   const clientID = useClientID();
   const [friendID, setFriendID] = useState(null);
 
+  if (userType !== 'volunteer') {
+    window.postMessage(JSON.stringify({ id: 'volunteerID' }));
+  }
   /**
    * Start the call with or without video
    * @param {Boolean} video
