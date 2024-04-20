@@ -39,9 +39,11 @@ class App extends Component {
 
   startCall(isCaller, friendID, config , userType) {
     
+      // В вашем скрипте внутри WebView
       if (userType !== 'volunteer') {
-        window.postMessage(JSON.stringify({ id: 'volunteerID' }));
+        window.ReactNativeWebView.postMessage(JSON.stringify({ id: 'volunteerID' }));
       }
+
 
     this.config = config;
     this.pc = new PeerConnection(friendID)

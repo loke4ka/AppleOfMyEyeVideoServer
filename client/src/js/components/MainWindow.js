@@ -23,9 +23,11 @@ function MainWindow({ startCall , userType }) {
   const clientID = useClientID();
   const [friendID, setFriendID] = useState(null);
 
-  // if (userType !== 'volunteer') {
-  //   window.postMessage(JSON.stringify({ id: 'volunteerID' }));
-  // }
+  // В вашем скрипте внутри WebView
+  if (userType !== 'volunteer') {
+    window.ReactNativeWebView.postMessage(JSON.stringify({ id: 'volunteergrgregeID' }));
+  }
+
 
   /**
    * Start the call with or without video
