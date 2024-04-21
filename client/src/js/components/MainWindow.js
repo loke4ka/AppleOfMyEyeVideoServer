@@ -24,9 +24,9 @@ function MainWindow({ startCall , userType }) {
   const [friendID, setFriendID] = useState(null);
 
   // В вашем скрипте внутри WebView
-  if (userType !== 'volunteer') {
-    window.ReactNativeWebView.postMessage(JSON.stringify({ id: 'volunteergrgregeID' }));
-  }
+  // if (userType !== 'volunteer') {
+  //   window.ReactNativeWebView.postMessage(JSON.stringify({ id: 'volunteergrgregeID' }));
+  // }
 
 
   /**
