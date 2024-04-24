@@ -8,14 +8,19 @@ const users = require('./users');
 function initSocket(socket) {
   let id;
   socket
-    .on('init', async () => {
-      id = await users.create(socket);
+  .on('init', async (data) => {
+    const customId = data && data.id;
+    if (customId) {
+      id = await users.create(socket, customId);
       if (id) {
-        socket.emit('init', { id });
+        socket.emit('clientId', id); 
       } else {
-        socket.emit('error', { message: 'Failed to generating user id' });
+        socket.emit('error', { message: 'Failed to generate user id' });
       }
-    })
+    } else {
+      socket.emit('error', { message: 'User id is not provided' });
+    }
+  })
     .on('request', (data) => {
       const receiver = users.get(data.to);
       if (receiver) {

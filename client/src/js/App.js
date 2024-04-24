@@ -38,13 +38,6 @@ class App extends Component {
   }
 
   startCall(isCaller, friendID, config , userType) {
-    
-      // В вашем скрипте внутри WebView
-      if (userType !== 'volunteer') {
-        window.ReactNativeWebView.postMessage(JSON.stringify({ id: 'volunteerID' }));
-      }
-
-
     this.config = config;
     this.pc = new PeerConnection(friendID)
       .on('localStream', (src) => {
@@ -83,13 +76,16 @@ class App extends Component {
     const { callFrom, callModal, callWindow, localSrc, peerSrc } = this.state;
     const urlParams = new URLSearchParams(window.location.search);
     const userType = urlParams.get('userType');
+    const userId = urlParams.get('userId');
+
 
     console.log('User type:', userType);
+    console.log('User id:', userId);
 
     return (
       <div>
         
-        <MainWindow startCall={this.startCallHandler} userType={userType} />
+        <MainWindow startCall={this.startCallHandler} userType={userType} userCustomId={userId}/>
         {!_.isEmpty(this.config) && (
           <CallWindow
             status={callWindow}

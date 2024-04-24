@@ -4,26 +4,32 @@ import { faPhone, faVideo } from '@fortawesome/free-solid-svg-icons';
 import ActionButton from './ActionButton';
 import { socket } from '../communication';
 
-function useClientID() {
+function useClientID({ userCustomId }) {
   const [clientID, setClientID] = useState('');
 
   useEffect(() => {
-    socket
-      .on('init', ({ id }) => {
-        document.title = `${id} - VideoCall`;
-        setClientID(id);
-        console.log('Client ID:', id);
-      });
-  }, []);
+    socket.emit('init', { id: userCustomId });
+
+    socket.on('clientId', (id) => {
+      document.title = `${id} - VideoCall`;
+      setClientID(id);
+      console.log('Client ID:', id);
+    });
+
+    return () => {
+      socket.off('clientId');
+    };
+  }, [userCustomId]);
 
   return clientID;
 }
 
-function MainWindow({ startCall , userType }) {
-  const clientID = useClientID();
+
+function MainWindow({ startCall , userType , userCustomId}) {
+  const clientID = useClientID({userCustomId});
   const [friendID, setFriendID] = useState(null);
 
-  // В вашем скрипте внутри WebView
+
   // if (userType !== 'volunteer') {
   //   window.ReactNativeWebView.postMessage(JSON.stringify({ id: 'volunteergrgregeID' }));
   // }
@@ -57,7 +63,7 @@ function MainWindow({ startCall , userType }) {
               type="text"
               className="txt-clientId"
               spellCheck={false}
-              placeholder="Your friend ID"
+              placeholder="Type ID here"
               onChange={(event) => setFriendID(event.target.value)}
             />
             <div>

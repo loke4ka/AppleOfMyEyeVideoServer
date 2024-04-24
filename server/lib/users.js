@@ -16,13 +16,14 @@ async function randomID(counter = 0) {
   return id in users ? randomID(counter + 1) : id;
 }
 
-exports.create = async (socket) => {
-  const id = await randomID();
+exports.create = async (socket, customId) => {
+  const id = customId || (await randomID());
   if (id) {
     users[id] = socket;
   }
   return id;
 };
+
 
 exports.get = (id) => users[id];
 
