@@ -58,7 +58,7 @@ function MainWindow({ startCall , userType , userCustomId}) {
         </h3>
         {userType === 'volunteer' && (
           <div>
-            <h4>Get started by calling a friend below</h4>
+            <h4>Wait please</h4>
             <input
               type="text"
               className="txt-clientId"
